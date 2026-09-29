@@ -1,0 +1,241 @@
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 14, 16, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.lightboxModal {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5), 0 0 40px rgba(253, 164, 175, 0.3);
+  position: relative;
+  animation: scaleUp 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 768px) {
+  .lightboxModal {
+    flex-direction: row;
+    max-height: 80vh;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(254, 205, 211, 0.5);
+  color: var(--color-soft-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 30;
+  transition: var(--transition-smooth);
+}
+
+.closeBtn:hover {
+  background: var(--color-pink-500);
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+/* Image Side */
+.imageSection {
+  flex: 1.2;
+  background: #141113;
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightboxImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.navArrowLeft,
+.navArrowRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-soft-dark);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  z-index: 10;
+}
+
+.navArrowLeft { left: 12px; }
+.navArrowRight { right: 12px; }
+
+.navArrowLeft:hover,
+.navArrowRight:hover {
+  background: #ffffff;
+  color: var(--color-pink-500);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Info Side */
+.infoSection {
+  flex: 0.9;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #faf7f5;
+  overflow-y: auto;
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.categoryBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(253, 164, 175, 0.25);
+  color: var(--color-pink-deep);
+}
+
+.modalTitle {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-soft-dark);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--color-muted-text);
+  font-size: 0.85rem;
+  margin-bottom: 24px;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.captionBox {
+  background: #ffffff;
+  border: 1px solid rgba(254, 205, 211, 0.5);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.captionBox::before {
+  content: '“';
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  color: var(--color-pink-tulip);
+  line-height: 1;
+}
+
+.captionText {
+  font-family: var(--font-handwriting);
+  font-size: 1.4rem;
+  color: #374151;
+  line-height: 1.4;
+  padding-top: 6px;
+}
+
+.footerActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(254, 205, 211, 0.4);
+  padding-top: 16px;
+}
+
+.likeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  background: rgba(253, 164, 175, 0.2);
+  border: 1px solid var(--color-pink-300);
+  color: var(--color-pink-500);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.likeBtn:hover {
+  background: var(--color-pink-500);
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.likedActive {
+  background: var(--color-pink-500);
+  color: #ffffff;
+}
+
+.photoCounter {
+  font-size: 0.85rem;
+  color: var(--color-muted-text);
+  font-weight: 500;
+}

@@ -1,0 +1,233 @@
+.timelineSection {
+  padding: 100px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.sectionHeader {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 60px;
+}
+
+.sectionTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-pink-500);
+  background: rgba(253, 164, 175, 0.25);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 400;
+  color: var(--color-soft-dark);
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.sectionTitle em {
+  font-style: italic;
+  color: var(--color-pink-tulip);
+  background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sectionSubtitle {
+  font-size: 1.05rem;
+  color: var(--color-muted-text);
+  line-height: 1.6;
+}
+
+/* Timeline Track */
+.timelineContainer {
+  position: relative;
+  margin-top: 40px;
+}
+
+.timelineLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--color-pink-300) 10%,
+    var(--color-pink-400) 50%,
+    var(--color-pink-300) 90%,
+    transparent 100%
+  );
+}
+
+@media (max-width: 768px) {
+  .timelineLine {
+    left: 24px;
+  }
+}
+
+.milestoneRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.milestoneLeft {
+  flex-direction: row;
+}
+
+.milestoneRight {
+  flex-direction: row-reverse;
+}
+
+@media (max-width: 768px) {
+  .milestoneLeft,
+  .milestoneRight {
+    flex-direction: row;
+    padding-left: 50px;
+  }
+}
+
+.timelineContent {
+  width: 45%;
+}
+
+@media (max-width: 768px) {
+  .timelineContent {
+    width: 100%;
+  }
+}
+
+.timelineCard {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-pink-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--glass-shadow);
+  transition: var(--transition-smooth);
+}
+
+.timelineCard:hover {
+  background: var(--glass-bg-hover);
+  transform: translateY(-4px);
+  box-shadow: var(--glass-shadow-hover);
+}
+
+.milestoneBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(254, 205, 211, 0.4);
+  color: var(--color-pink-deep);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.milestoneTitle {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-soft-dark);
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+
+.milestoneDate {
+  font-size: 0.85rem;
+  color: var(--color-pink-500);
+  font-weight: 500;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.milestoneDesc {
+  font-size: 0.95rem;
+  color: var(--color-muted-text);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.quoteBox {
+  font-family: var(--font-handwriting);
+  font-size: 1.25rem;
+  color: #4b5563;
+  background: rgba(255, 241, 242, 0.6);
+  border-left: 3px solid var(--color-pink-400);
+  padding: 10px 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 16px;
+}
+
+.milestonePhotoFrame {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.milestonePhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.milestonePhotoFrame:hover .milestonePhoto {
+  transform: scale(1.06);
+}
+
+/* Center Node Tulip */
+.timelineNode {
+  position: absolute;
+  left: 50%;
+  top: 32px;
+  transform: translate(-50%, -50%);
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-full);
+  background: #ffffff;
+  border: 2px solid var(--color-pink-300);
+  box-shadow: 0 0 16px rgba(253, 164, 175, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  z-index: 10;
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .timelineNode {
+    left: 24px;
+  }
+}
+
+.milestoneRow:hover .timelineNode {
+  transform: translate(-50%, -50%) scale(1.2);
+  border-color: var(--color-pink-500);
+}
