@@ -167,7 +167,7 @@ export default function Home() {
           {/* Chapters Love Story Timeline */}
           <LoveStoryTimeline onPhotoClick={handleOpenPhoto} />
 
-          {/* Heart's Tulip Garden */}
+          {/* Cora's Tulip Garden */}
           <TulipBlossom />
 
           {/* Love Diary & Unsealed Letters */}
