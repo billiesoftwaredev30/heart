@@ -56,6 +56,7 @@ export default function Home() {
 
   const handleUnlock = () => {
     setIsAuthenticated(true);
+    setIsPlaying(true);
     try {
       localStorage.setItem('heart_billie_auth', 'true');
     } catch {
@@ -65,6 +66,7 @@ export default function Home() {
 
   const handleLock = () => {
     setIsAuthenticated(false);
+    setIsPlaying(false);
     try {
       localStorage.removeItem('heart_billie_auth');
     } catch {
