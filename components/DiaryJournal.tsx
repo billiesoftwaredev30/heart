@@ -199,7 +199,7 @@ export default function DiaryJournal() {
           <div className={styles.noteInputRow}>
             <input
               type="text"
-              placeholder="Your Name (Heart / Billie)..."
+              placeholder="Your Name (Cora / Billie)..."
               value={senderName}
               onChange={(e) => setSenderName(e.target.value)}
               className={styles.noteInput}

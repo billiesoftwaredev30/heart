@@ -63,7 +63,7 @@ export default function LoveQuiz() {
           <span>Couple Trivia Game</span>
         </div>
         <h2 className={styles.sectionTitle}>
-          The Billie & Heart <em>Love Quiz</em>
+          The Billie & Cora <em>Love Quiz</em>
         </h2>
         <p className={styles.sectionSubtitle}>
           How well do you know our inside jokes, favorite flowers, and memorable quirks? Test your score below!
@@ -133,7 +133,7 @@ export default function LoveQuiz() {
                 : 'Sweetest Love Story!'}
             </h3>
             <p className={styles.resultSubtitle}>
-              You scored {score} out of {COUPLE_QUIZ_QUESTIONS.length}! Every single answer proves how special and full of laughter Billie & Heart’s journey is.
+              You scored {score} out of {COUPLE_QUIZ_QUESTIONS.length}! Every single answer proves how special and full of laughter Billie & Cora’s journey is.
             </p>
 
             <button onClick={handleRestart} className={styles.quizNextBtn}>

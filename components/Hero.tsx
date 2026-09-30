@@ -54,7 +54,7 @@ export default function Hero({ onPhotoClick, onOpenMusic }: HeroProps) {
 
         {/* Hero Title */}
         <h1 className={styles.heroTitle}>
-          Heart <em>&</em> Billie
+          Cora <em>&</em> Billie
         </h1>
 
         {/* Hero Subtitle */}

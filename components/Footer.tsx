@@ -15,12 +15,12 @@ export default function Footer() {
         {/* Logo */}
         <div className={styles.footerLogo}>
           <span className={styles.footerLogoIcon}>🌷</span>
-          <span className={styles.footerLogoText}>Heart & Billie</span>
+          <span className={styles.footerLogoText}>Cora & Billie</span>
         </div>
 
         {/* Romantic quote */}
         <p className={styles.footerQuote}>
-          "Ikaw ang aking Heart, aking tahanan, at aking magpakailanman."
+          "Ikaw ang aking mahal, aking tahanan, at aking magpakailanman."
         </p>
 
         {/* Links */}
@@ -53,7 +53,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <p className={styles.copyrightText}>
-          Made with <Heart size={14} fill="var(--color-pink-500)" color="var(--color-pink-500)" /> for Billie & Heart • Forever & Always (2026)
+          Made with <Heart size={14} fill="var(--color-pink-500)" color="var(--color-pink-500)" /> for Billie & Cora • Forever & Always (2026)
         </p>
       </div>
     </footer>

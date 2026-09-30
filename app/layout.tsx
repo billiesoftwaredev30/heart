@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Heart & Billie — Our Scrapbook & Diary',
-  description: 'A modern minimalist couples diary and romantic scrapbook for Heart & Billie. Filled with memories, photos, tulip blossoms, and endless love.',
-  keywords: ['Heart and Billie', 'Couples Diary', 'Love Scrapbook', 'Tulip Love', 'Romantic Memories'],
+  title: 'Cora & Billie — Our Scrapbook & Diary',
+  description: 'A modern minimalist couples diary and romantic scrapbook for Cora & Billie. Filled with memories, photos, tulip blossoms, and endless love.',
+  keywords: ['Cora and Billie', 'Couples Diary', 'Love Scrapbook', 'Tulip Love', 'Romantic Memories'],
   openGraph: {
-    title: 'Heart & Billie — Our Digital Diary & Scrapbook',
+    title: 'Cora & Billie — Our Digital Diary & Scrapbook',
     description: 'A timeless sanctuary of our favorite memories, letters, and adventures together.',
     type: 'website',
   },

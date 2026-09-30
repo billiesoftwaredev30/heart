@@ -50,9 +50,9 @@ export const TIMELINE_MILESTONES: Milestone[] = [
     date: 'Tulip Fields & Surprises',
     title: 'A Touch of Pink Tulips',
     tag: 'Special Memory',
-    description: 'Surprising Heart with gentle pink tulips—her favorite flower representing true love, softness, and new beginnings. Seeing her eyes light up was worth everything in the world.',
+    description: 'Surprising Cora with gentle pink tulips—her favorite flower representing true love, softness, and new beginnings. Seeing her eyes light up was worth everything in the world.',
     photo: '/photos/4B211529-C5BB-451E-935A-8C7F7B207B25.jpeg',
-    quote: '"Tulips for my Heart, blooming forever."',
+    quote: '"Tulips for my Cora, blooming forever."',
     location: 'Flower Garden'
   },
   {
@@ -74,7 +74,7 @@ export const TIMELINE_MILESTONES: Milestone[] = [
     tag: 'Forever Love',
     description: 'Looking back on how much we have grown together, supported each other’s dreams, and built a sanctuary of pure warmth, respect, and deep romance.',
     photo: '/photos/86CC7901-8947-48F0-832F-6B381EAB3058.jpeg',
-    quote: '"Aking Heart, ikaw at ako hanggang dulo."',
+    quote: '"Aking Cora, ikaw at ako hanggang dulo."',
     location: 'Celebration Lights'
   },
   {

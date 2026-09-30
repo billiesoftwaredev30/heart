@@ -86,10 +86,10 @@ export default function TulipBlossom() {
       <div className={styles.sectionHeader}>
         <div className={styles.sectionTag}>
           <span>🌷</span>
-          <span>Heart’s Flower Sanctuary</span>
+          <span>Cora’s Flower Sanctuary</span>
         </div>
         <h2 className={styles.sectionTitle}>
-          Heart’s <em>Tulip Garden</em>
+          Cora’s <em>Tulip Garden</em>
         </h2>
         <p className={styles.sectionSubtitle}>
           Pink tulips symbolize pure affection, caring, and sweet love. Pluck a tulip to receive a romantic note or plant a fresh bloom in our garden!

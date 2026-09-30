@@ -1,7 +1,7 @@
 export interface DiaryLetter {
   id: string;
-  sender: 'Billie' | 'Heart';
-  recipient: 'Heart' | 'Billie';
+  sender: 'Billie' | 'Cora';
+  recipient: 'Cora' | 'Billie';
   title: string;
   date: string;
   excerpt: string;
@@ -15,15 +15,15 @@ export const DIARY_LETTERS: DiaryLetter[] = [
   {
     id: 'letter-1',
     sender: 'Billie',
-    recipient: 'Heart',
-    title: 'To My Dearest Heart, My Whole World',
+    recipient: 'Cora',
+    title: 'To My Dearest Cora, My Whole World',
     date: 'A Quiet Midnight',
     excerpt: 'I wrote this website as a digital sanctuary of our love story...',
     themeColor: '#FDA4AF',
     stampEmoji: '🌷',
     isSealedByDefault: false,
     fullLetter: [
-      'My dearest Heart,',
+      'My dearest Cora,',
       'If you ever wonder how much you mean to me, just look through these pages, photos, and memories we’ve created together. Every snapshot is proof that having you in my life is the greatest blessing I have ever received.',
       'Thank you for your warmth, your patience, your adorable laughter, and the way you always make ordinary moments feel like something straight out of a romance film. When the world gets chaotic, being with you brings me absolute stillness and peace.',
       'I will always choose you, cherish you, and bring you pink tulips whenever you need a reminder of how deeply you are adored.',
@@ -33,7 +33,7 @@ export const DIARY_LETTERS: DiaryLetter[] = [
   },
   {
     id: 'letter-2',
-    sender: 'Heart',
+    sender: 'Cora',
     recipient: 'Billie',
     title: 'To My Safe Haven, Billie',
     date: 'A Gentle Sunny Morning',
@@ -47,13 +47,13 @@ export const DIARY_LETTERS: DiaryLetter[] = [
       'I love how thoughtful you are, the little ways you take care of me, and how you hold my hand through every journey. Thank you for filling our world with so much warmth and sweetness.',
       'Here is to a lifetime of late-night food runs, laughing at each other’s jokes, and growing old together hand in hand.',
       'With all my love,',
-      '— Your Heart'
+      '— Your Cora'
     ]
   },
   {
     id: 'letter-3',
     sender: 'Billie',
-    recipient: 'Heart',
+    recipient: 'Cora',
     title: 'A Little Promise for Every Tomorrow',
     date: 'Anniversary Note',
     excerpt: 'No matter where life leads us, my promise to you remains unshakable...',
@@ -61,10 +61,10 @@ export const DIARY_LETTERS: DiaryLetter[] = [
     stampEmoji: '✨',
     isSealedByDefault: true,
     fullLetter: [
-      'My Heart,',
+      'My Cora,',
       'I promise to listen to your stories with all my attention, to kiss your forehead whenever you feel tired, to celebrate your biggest victories, and to be your anchor whenever the waves get high.',
       'You are my home, my peace, and my greatest dream come true.',
-      'Mahal na mahal kita, Heart ko.',
+      'Mahal na mahal kita, Cora ko.',
       '— Billie'
     ]
   }
@@ -89,5 +89,5 @@ export const REASONS_WHY_I_LOVE_YOU: ReasonWhy[] = [
   { id: 9, reason: "Our late-night deep conversations when the whole world is asleep.", icon: "🌙", tag: "Nights" },
   { id: 10, reason: "The delicious food we share and how we always steal bites from each other.", icon: "🍰", tag: "Food" },
   { id: 11, reason: "How you motivate and inspire me to become a better person every day.", icon: "🌱", tag: "Growth" },
-  { id: 12, reason: "Simply because you are you—my Heart, my forever partner.", icon: "💖", tag: "Forever" }
+  { id: 12, reason: "Simply because you are you—my Cora, my forever partner.", icon: "💖", tag: "Forever" }
 ];

@@ -49,7 +49,7 @@ export default function Navbar({
             <span>🌷</span>
           </div>
           <div className={styles.brandText}>
-            <span className={styles.brandTitle}>Heart & Billie</span>
+            <span className={styles.brandTitle}>Cora & Billie</span>
             <span className={styles.brandSub}>Forever & Always</span>
           </div>
         </Link>

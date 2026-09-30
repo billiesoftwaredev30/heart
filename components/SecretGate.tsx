@@ -16,8 +16,11 @@ const VALID_PASSCODES = [
   '09192026',
   '091926',
   '20260919',
+  'cora',
   'heart',
   'billie',
+  'coraandbillie',
+  'billieandcora',
   'heartandbillie',
   'billieandheart',
   'tulip',
@@ -66,7 +69,7 @@ export default function SecretGate({ onUnlock }: SecretGateProps) {
 
         {/* Subtitle */}
         <p className={styles.gateSubtitle}>
-          This scrapbook is a private sanctuary for Heart & Billie. Enter our secret key or anniversary date to open.
+          This scrapbook is a private sanctuary for Cora & Billie. Enter our secret key or anniversary date to open.
         </p>
 
         {/* Form */}
@@ -90,7 +93,7 @@ export default function SecretGate({ onUnlock }: SecretGateProps) {
 
           {hasError && (
             <p className={styles.errorText}>
-              Oops! Only Heart & Billie know the secret key. 🌷
+              Oops! Only Cora & Billie know the secret key. 🌷
             </p>
           )}
 
@@ -119,7 +122,7 @@ export default function SecretGate({ onUnlock }: SecretGateProps) {
         </div>
 
         <p className={styles.gateFooterNote}>
-          "Ikaw ang aking Heart, magpakailanman."
+          "Ikaw ang aking mahal, magpakailanman."
         </p>
       </div>
     </div>

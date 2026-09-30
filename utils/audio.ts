@@ -1,6 +1,6 @@
 export const MUSIC_TRACK = {
   title: 'Aking Heart',
-  artist: 'Dedicated to Heart & Billie',
+  artist: 'Dedicated to Cora & Billie',
   src: '/music/_Aking Heart_.mp3',
   cover: '/photos/08975B8F-7A6A-44E6-83F6-ED4D2272664C.jpeg',
 };
