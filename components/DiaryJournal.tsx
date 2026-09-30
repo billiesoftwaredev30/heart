@@ -1,18 +1,30 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Mail, MailOpen, Heart, Sparkles, Send, PenTool, CheckCircle2 } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+  Mail,
+  MailOpen,
+  Heart,
+  Sparkles,
+  Send,
+  PenTool,
+  CheckCircle2,
+  RotateCcw,
+  Loader2,
+  Users,
+} from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { DIARY_LETTERS, REASONS_WHY_I_LOVE_YOU, DiaryLetter } from '@/lib/diaryEntries';
+import { DIARY_LETTERS, REASONS_WHY_I_LOVE_YOU } from '@/lib/diaryEntries';
 import { playChime } from '@/utils/audio';
 import styles from './DiaryJournal.module.css';
 
-interface UserMemoryNote {
+export interface UserMemoryNote {
   id: string;
   sender: string;
   content: string;
   date: string;
   stamp: string;
+  createdAt?: number;
 }
 
 export default function DiaryJournal() {
@@ -24,18 +36,60 @@ export default function DiaryJournal() {
   const [senderName, setSenderName] = useState('');
   const [noteContent, setNoteContent] = useState('');
   const [selectedStamp, setSelectedStamp] = useState('🌷');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  useEffect(() => {
+  // Fetch shared notes from backend API
+  const fetchNotes = useCallback(async () => {
     try {
-      const saved = localStorage.getItem('heart_billie_notes');
-      if (saved) {
-        setNotes(JSON.parse(saved));
+      const res = await fetch('/api/notes', { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && Array.isArray(data.notes)) {
+          setNotes(data.notes);
+          try {
+            localStorage.setItem('heart_billie_notes', JSON.stringify(data.notes));
+          } catch {
+            // storage fallback
+          }
+        }
       }
     } catch {
-      // localStorage fallback
+      // Offline fallback: load from localStorage
+      try {
+        const saved = localStorage.getItem('heart_billie_notes');
+        if (saved) {
+          setNotes(JSON.parse(saved));
+        }
+      } catch {
+        // storage
+      }
     }
   }, []);
+
+  // Initial load and polling every 7 seconds + window focus
+  useEffect(() => {
+    fetchNotes();
+
+    const interval = setInterval(() => {
+      fetchNotes();
+    }, 7000);
+
+    const onFocus = () => fetchNotes();
+    window.addEventListener('focus', onFocus);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('focus', onFocus);
+    };
+  }, [fetchNotes]);
+
+  const handleManualRefresh = async () => {
+    setIsRefreshing(true);
+    await fetchNotes();
+    setTimeout(() => setIsRefreshing(false), 500);
+  };
 
   const toggleLetter = (id: string) => {
     setOpenLetterIds((prev) => {
@@ -53,11 +107,12 @@ export default function DiaryJournal() {
     });
   };
 
-  const handleAddNote = (e: React.FormEvent) => {
+  const handleAddNote = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!senderName.trim() || !noteContent.trim()) return;
+    if (!senderName.trim() || !noteContent.trim() || isSubmitting) return;
 
-    const newNote: UserMemoryNote = {
+    setIsSubmitting(true);
+    const newNoteDraft: UserMemoryNote = {
       id: `note-${Date.now()}`,
       sender: senderName.trim(),
       content: noteContent.trim(),
@@ -67,29 +122,51 @@ export default function DiaryJournal() {
         year: 'numeric',
       }),
       stamp: selectedStamp,
+      createdAt: Date.now(),
     };
 
-    const updated = [newNote, ...notes];
-    setNotes(updated);
+    // Optimistic UI update
+    setNotes((prev) => [newNoteDraft, ...prev]);
+
     try {
-      localStorage.setItem('heart_billie_notes', JSON.stringify(updated));
-    } catch {
-      // storage
+      const res = await fetch('/api/notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sender: senderName.trim(),
+          content: noteContent.trim(),
+          stamp: selectedStamp,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.notes) {
+          setNotes(data.notes);
+          try {
+            localStorage.setItem('heart_billie_notes', JSON.stringify(data.notes));
+          } catch {
+            // storage
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Failed to post note to server:', err);
+    } finally {
+      setIsSubmitting(false);
+      setNoteContent('');
+      setSavedSuccess(true);
+      playChime();
+
+      confetti({
+        particleCount: 40,
+        spread: 60,
+        origin: { y: 0.8 },
+        colors: ['#FB7185', '#FDA4AF', '#F43F5E'],
+      });
+
+      setTimeout(() => setSavedSuccess(false), 3000);
     }
-
-    setSenderName('');
-    setNoteContent('');
-    setSavedSuccess(true);
-    playChime();
-
-    confetti({
-      particleCount: 40,
-      spread: 60,
-      origin: { y: 0.8 },
-      colors: ['#FB7185', '#FDA4AF', '#F43F5E'],
-    });
-
-    setTimeout(() => setSavedSuccess(false), 3000);
   };
 
   const stamps = ['🌷', '💖', '💌', '☕', '✨', '🕊️'];
@@ -190,16 +267,40 @@ export default function DiaryJournal() {
 
       {/* Add a Memory Note / Digital Sticky */}
       <div className={styles.writeNoteBox}>
+        <div className={styles.syncBadge}>
+          <span className={styles.liveDot} />
+          <span>Shared Cloud Vault • Synced live between Cora & Billie</span>
+        </div>
+
         <h3 className={styles.noteFormTitle}>Write a Little Love Note</h3>
-        <p className={styles.subSectionSubtitle} style={{ textAlign: 'left', marginBottom: 20 }}>
-          Leave a sweet message or secret diary note to be saved permanently in this scrapbook.
+        <p className={styles.subSectionSubtitle} style={{ textAlign: 'left', marginBottom: 16 }}>
+          Leave a sweet message or secret diary note that saves permanently so both of you can see it on any device.
         </p>
+
+        {/* Quick Sender Selector */}
+        <div className={styles.senderPills}>
+          <span className={styles.senderPillLabel}>I am:</span>
+          <button
+            type="button"
+            onClick={() => setSenderName('Cora')}
+            className={`${styles.senderChip} ${senderName === 'Cora' ? styles.senderChipActive : ''}`}
+          >
+            🌷 Cora
+          </button>
+          <button
+            type="button"
+            onClick={() => setSenderName('Billie')}
+            className={`${styles.senderChip} ${senderName === 'Billie' ? styles.senderChipActive : ''}`}
+          >
+            💙 Billie
+          </button>
+        </div>
 
         <form onSubmit={handleAddNote}>
           <div className={styles.noteInputRow}>
             <input
               type="text"
-              placeholder="Your Name (Cora / Billie)..."
+              placeholder="Your Name (Cora or Billie)..."
               value={senderName}
               onChange={(e) => setSenderName(e.target.value)}
               className={styles.noteInput}
@@ -234,16 +335,21 @@ export default function DiaryJournal() {
               ))}
             </div>
 
-            <button type="submit" className={styles.unsealBtn}>
+            <button type="submit" className={styles.unsealBtn} disabled={isSubmitting}>
               {savedSuccess ? (
                 <>
                   <CheckCircle2 size={16} />
-                  <span>Saved to Diary!</span>
+                  <span>Saved to Shared Vault!</span>
+                </>
+              ) : isSubmitting ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  <span>Saving...</span>
                 </>
               ) : (
                 <>
                   <Send size={16} />
-                  <span>Save Love Note</span>
+                  <span>Send Love Note 💌</span>
                 </>
               )}
             </button>
@@ -252,31 +358,36 @@ export default function DiaryJournal() {
 
         {/* Display User Added Notes */}
         {notes.length > 0 && (
-          <div style={{ marginTop: 32, borderTop: '1px dashed rgba(254, 205, 211, 0.6)', paddingTop: 24 }}>
-            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', marginBottom: 16, color: 'var(--color-soft-dark)' }}>
-              Saved Love Notes ({notes.length})
-            </h4>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>
+          <div className={styles.savedNotesSection}>
+            <div className={styles.savedNotesHeader}>
+              <h4 className={styles.savedNotesTitle}>
+                <span>💌</span>
+                <span>Our Shared Love Notes ({notes.length})</span>
+              </h4>
+              <button
+                type="button"
+                onClick={handleManualRefresh}
+                className={styles.refreshBtn}
+                title="Refresh notes from server"
+              >
+                <RotateCcw size={13} style={{ animation: isRefreshing ? 'spinSlow 1s linear infinite' : undefined }} />
+                <span>Sync now</span>
+              </button>
+            </div>
+
+            <div className={styles.savedNotesGrid}>
               {notes.map((n) => (
-                <div
-                  key={n.id}
-                  style={{
-                    background: '#ffffff',
-                    border: '1px solid rgba(254, 205, 211, 0.6)',
-                    borderRadius: 'var(--radius-md)',
-                    padding: 16,
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                    <span style={{ fontSize: '1.2rem' }}>{n.stamp}</span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--color-pink-500)', fontWeight: 600 }}>
-                      {n.sender} • {n.date}
-                    </span>
+                <div key={n.id} className={styles.stickyNoteCard}>
+                  <div>
+                    <div className={styles.noteCardHeader}>
+                      <span className={styles.noteCardStamp}>{n.stamp}</span>
+                      <div className={styles.noteCardMeta}>
+                        <span className={styles.noteCardSender}>{n.sender}</span>
+                        <span className={styles.noteCardDate}>{n.date}</span>
+                      </div>
+                    </div>
+                    <p className={styles.noteCardContent}>"{n.content}"</p>
                   </div>
-                  <p style={{ fontFamily: 'var(--font-handwriting)', fontSize: '1.15rem', color: '#374151' }}>
-                    "{n.content}"
-                  </p>
                 </div>
               ))}
             </div>

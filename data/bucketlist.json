@@ -1,0 +1,62 @@
+[
+  {
+    "id": "b-1",
+    "title": "Visit a giant pink tulip field garden together in spring",
+    "category": "Travel",
+    "completed": true,
+    "dateCompleted": "Spring Memory",
+    "notes": "Surrounded by thousands of blooming tulips!"
+  },
+  {
+    "id": "b-2",
+    "title": "Watch the sunset and stargaze by the beach wrapped in one blanket",
+    "category": "Dates",
+    "completed": true,
+    "dateCompleted": "Beach Getaway",
+    "notes": "Listening to the ocean waves under the stars"
+  },
+  {
+    "id": "b-3",
+    "title": "Take 1,000+ candid photos and turn them into a curated digital memory vault",
+    "category": "Memories",
+    "completed": true,
+    "dateCompleted": "Right now ❤️",
+    "notes": "Our digital scrapbook diary website!"
+  },
+  {
+    "id": "b-4",
+    "title": "Bake a cake and decorate it together from scratch (even if it turns messy!)",
+    "category": "Dates",
+    "completed": true,
+    "dateCompleted": "Baking Sunday",
+    "notes": "Tasted delicious and full of laughter"
+  },
+  {
+    "id": "b-5",
+    "title": "Travel to Japan / Europe and walk hand in hand through quiet historic streets",
+    "category": "Travel",
+    "completed": false,
+    "notes": "Saving up for our big international dream trip"
+  },
+  {
+    "id": "b-6",
+    "title": "Build our cozy dream home with a tulip garden balcony and record player",
+    "category": "Life",
+    "completed": false,
+    "notes": "Our forever sanctuary filled with warmth and love"
+  },
+  {
+    "id": "b-7",
+    "title": "Have a spontaneous midnight road trip to watch the city sunrise",
+    "category": "Dates",
+    "completed": false,
+    "notes": "Pack hot coffee and our favorite playlist"
+  },
+  {
+    "id": "b-8",
+    "title": "Celebrate our 50th Anniversary still holding hands and laughing like day one",
+    "category": "Life",
+    "completed": false,
+    "notes": "Our lifetime promise"
+  }
+]

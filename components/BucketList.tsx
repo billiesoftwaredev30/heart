@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Check, Plus, Heart, Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Check, Plus, Heart, Sparkles, RotateCcw } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { INITIAL_BUCKET_LIST, BucketItem } from '@/lib/bucketListData';
 import { playChime } from '@/utils/audio';
@@ -11,18 +11,44 @@ export default function BucketList() {
   const [items, setItems] = useState<BucketItem[]>(INITIAL_BUCKET_LIST);
   const [newDream, setNewDream] = useState('');
 
-  useEffect(() => {
+  const fetchBucketList = useCallback(async () => {
     try {
-      const saved = localStorage.getItem('heart_billie_bucketlist');
-      if (saved) {
-        setItems(JSON.parse(saved));
+      const res = await fetch('/api/bucketlist', { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && Array.isArray(data.items)) {
+          setItems(data.items);
+          try {
+            localStorage.setItem('heart_billie_bucketlist', JSON.stringify(data.items));
+          } catch {
+            // storage
+          }
+        }
       }
     } catch {
-      // storage
+      try {
+        const saved = localStorage.getItem('heart_billie_bucketlist');
+        if (saved) {
+          setItems(JSON.parse(saved));
+        }
+      } catch {
+        // storage
+      }
     }
   }, []);
 
-  const toggleItem = (id: string) => {
+  useEffect(() => {
+    fetchBucketList();
+    const interval = setInterval(fetchBucketList, 10000);
+    const onFocus = () => fetchBucketList();
+    window.addEventListener('focus', onFocus);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('focus', onFocus);
+    };
+  }, [fetchBucketList]);
+
+  const toggleItem = async (id: string) => {
     const updated = items.map((item) => {
       if (item.id === id) {
         const nextStatus = !item.completed;
@@ -35,40 +61,70 @@ export default function BucketList() {
             colors: ['#FB7185', '#FDA4AF', '#F43F5E'],
           });
         }
-        return { ...item, completed: nextStatus };
+        return {
+          ...item,
+          completed: nextStatus,
+          dateCompleted: nextStatus
+            ? new Date().toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+              })
+            : undefined,
+        };
       }
       return item;
     });
 
     setItems(updated);
+
     try {
-      localStorage.setItem('heart_billie_bucketlist', JSON.stringify(updated));
-    } catch {
-      // storage
+      const res = await fetch('/api/bucketlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'toggle', id }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.items) {
+          setItems(data.items);
+        }
+      }
+    } catch (err) {
+      console.error('Failed to sync bucket list item:', err);
     }
   };
 
-  const handleAddDream = (e: React.FormEvent) => {
+  const handleAddDream = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newDream.trim()) return;
 
-    const newItem: BucketItem = {
+    const draftItem: BucketItem = {
       id: `dream-${Date.now()}`,
       title: newDream.trim(),
       category: 'Memories',
       completed: false,
     };
 
-    const updated = [...items, newItem];
-    setItems(updated);
-    try {
-      localStorage.setItem('heart_billie_bucketlist', JSON.stringify(updated));
-    } catch {
-      // storage
-    }
-
+    setItems((prev) => [...prev, draftItem]);
     setNewDream('');
     playChime();
+
+    try {
+      const res = await fetch('/api/bucketlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'add', item: draftItem }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.items) {
+          setItems(data.items);
+        }
+      }
+    } catch (err) {
+      console.error('Failed to add bucket item to server:', err);
+    }
   };
 
   const completedCount = items.filter((i) => i.completed).length;

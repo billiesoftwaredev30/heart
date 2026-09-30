@@ -41,6 +41,10 @@ COPY --from=builder /app/public ./public
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
+# Ensure data directory exists and is owned by nextjs for live notes storage
+RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data
+
+COPY --from=builder --chown=nextjs:nodejs /app/data ./data
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
