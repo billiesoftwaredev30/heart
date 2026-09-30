@@ -11,6 +11,7 @@ interface NavbarProps {
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
   onLock: () => void;
+  currentTrackTitle?: string;
 }
 
 export default function Navbar({
@@ -19,6 +20,7 @@ export default function Navbar({
   theme,
   onToggleTheme,
   onLock,
+  currentTrackTitle = 'Aking Heart',
 }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -69,7 +71,7 @@ export default function Navbar({
           <button
             onClick={onTogglePlay}
             className={styles.actionButton}
-            title={isPlaying ? 'Pause Music' : 'Play Soundtrack: Aking Heart'}
+            title={isPlaying ? `Pause (${currentTrackTitle})` : `Play Soundtrack (${currentTrackTitle})`}
             aria-label="Toggle Soundtrack"
           >
             {isPlaying ? (

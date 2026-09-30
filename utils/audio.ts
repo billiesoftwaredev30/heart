@@ -1,9 +1,33 @@
-export const MUSIC_TRACK = {
-  title: 'Aking Heart',
-  artist: 'Dedicated to Cora & Billie',
-  src: '/music/_Aking Heart_.mp3',
-  cover: '/photos/08975B8F-7A6A-44E6-83F6-ED4D2272664C.jpeg',
-};
+export interface SongTrack {
+  id: string;
+  title: string;
+  artist: string;
+  src: string;
+  cover?: string;
+  tag?: string;
+}
+
+export const MUSIC_PLAYLIST: SongTrack[] = [
+  {
+    id: 'track-1',
+    title: 'Aking Heart',
+    artist: 'Dedicated to Cora & Billie',
+    src: '/music/Aking_Heart.mp3',
+    cover: '/photos/08975B8F-7A6A-44E6-83F6-ED4D2272664C.jpeg',
+    tag: 'Original Soundtrack',
+  },
+  {
+    id: 'track-2',
+    title: 'Bulacan Hanggang Dasma',
+    artist: 'Our Long Distance Love Story • Billie & Cora',
+    src: '/music/Bulacan_Hanggang_Dasma.mp3',
+    cover: '/photos/3ED6208D-F11C-4DBA-93F5-B7AFBDF638F0.jpeg',
+    tag: 'Special Song',
+  },
+];
+
+export const MUSIC_TRACK = MUSIC_PLAYLIST[0];
+
 
 export const playChime = () => {
   if (typeof window === 'undefined') return;

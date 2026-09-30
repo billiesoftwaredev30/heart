@@ -15,7 +15,7 @@ import PhotoLightbox from '@/components/PhotoLightbox';
 import FloatingPetals from '@/components/FloatingPetals';
 import SecretGate from '@/components/SecretGate';
 import { ALL_PHOTOS, PhotoItem } from '@/lib/photosData';
-import { playChime } from '@/utils/audio';
+import { playChime, MUSIC_PLAYLIST } from '@/utils/audio';
 
 export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -23,6 +23,7 @@ export default function Home() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [isPlaying, setIsPlaying] = useState(false);
   const [playerMinimized, setPlayerMinimized] = useState(false);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   
   // Lightbox state
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoItem | null>(null);
@@ -146,6 +147,7 @@ export default function Home() {
             theme={theme}
             onToggleTheme={toggleTheme}
             onLock={handleLock}
+            currentTrackTitle={MUSIC_PLAYLIST[currentTrackIndex]?.title}
           />
 
           {/* Hero Section */}
@@ -188,6 +190,8 @@ export default function Home() {
             onTogglePlay={togglePlay}
             minimized={playerMinimized}
             onToggleMinimize={() => setPlayerMinimized((m) => !m)}
+            currentTrackIndex={currentTrackIndex}
+            onTrackChange={setCurrentTrackIndex}
           />
 
           {/* Fullscreen Photo Lightbox */}
